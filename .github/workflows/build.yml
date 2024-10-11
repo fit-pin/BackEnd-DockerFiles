@@ -33,12 +33,6 @@ jobs:
           docker buildx create --name multi-arch-builder \
             --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x \
             --driver docker-container --bootstrap --use
-          
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: ghcr.io/${{ env.IMAGE_NAME }}
 
       - name: Build and push ${{env.IMAGE_NAME}} Docker image
         id: push
@@ -46,13 +40,12 @@ jobs:
         with:
           context: ./AR-BackEnd/
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-      
+          tags: ghcr.io/fit-pin/${{ env.IMAGE_NAME }}
+
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ghcr.io/${{ env.IMAGE_NAME}}
+          subject-name: ghcr.io/fit-pin/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
       

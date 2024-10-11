@@ -3,6 +3,7 @@ FROM da864268/my-ubuntu
 
 LABEL maintainer="da864268@naver.com"
 LABEL description="fitpin"
+LABEL org.opencontainers.image.source=https://github.com/fit-pin/fitpin_ar_backend
 
 # bash 로 변경
 SHELL ["/bin/bash", "-c"]

@@ -52,10 +52,10 @@ jobs:
           push-to-registry: true
 
   # AR-IDM 빌드
-  publish_AR-IDM:
+  publish_ar-idm:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: AR-IDM
+      IMAGE_NAME: ar-idm
       FILE_LOCATION: ./AR-IDM/
     permissions:
       contents: read

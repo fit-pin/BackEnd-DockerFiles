@@ -1,4 +1,4 @@
-name: Create and publish a Docker image
+name: Publish Docker image
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: fitpin-ar-backend
 
 jobs:
-  build-and-push-image:
+  publish-Docker-image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -44,7 +44,7 @@ jobs:
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: .
+          context: ./AR-BackEnd/
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

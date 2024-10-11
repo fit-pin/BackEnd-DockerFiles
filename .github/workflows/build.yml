@@ -5,12 +5,14 @@ on:
     branches: 
         - main
   workflow_dispatch:
-env:
-  IMAGE_NAME: fitpin-ar-backend
 
 jobs:
-  publish-Docker-image:
+  # fitpin-ar-backend 빌드
+  publish_fitpin-ar-backend:
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: fitpin-ar-backend
+      FILE_LOCATION: ./AR-BackEnd/
     permissions:
       contents: read
       packages: write
@@ -38,9 +40,9 @@ jobs:
         id: push
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: ./AR-BackEnd/
+          context: ${{ env.FILE_LOCATION }}
           push: true
-          tags: ghcr.io/fit-pin/${{ env.IMAGE_NAME }}
+          tags: ghcr.io/fit-pin/${{ env.IMAGE_NAME }}:latest
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
@@ -48,4 +50,47 @@ jobs:
           subject-name: ghcr.io/fit-pin/${{ env.IMAGE_NAME}}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
-      
+
+  # AR-IDM 빌드
+  publish_AR-IDM:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: AR-IDM
+      FILE_LOCATION: ./AR-IDM/
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.ACTIONS_TOKEN  }}
+
+      - name: Create multi-arch-builder
+        run: |
+          docker buildx create --name multi-arch-builder \
+            --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x \
+            --driver docker-container --bootstrap --use
+
+      - name: Build and push ${{env.IMAGE_NAME}} Docker image
+        id: push
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: ${{ env.FILE_LOCATION }}
+          push: true
+          tags: ghcr.io/fit-pin/${{ env.IMAGE_NAME }}:latest
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ghcr.io/fit-pin/${{ env.IMAGE_NAME}}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true

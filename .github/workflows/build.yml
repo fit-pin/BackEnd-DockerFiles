@@ -38,6 +38,10 @@ jobs:
 
       - name: Docker Setup Buildx
         uses: docker/setup-buildx-action@v3.7.1
+        with:
+          driver-opts: |
+            image=moby/buildkit:master
+          platforms: ${{ matrix.platform }}
         
       - name: Build and push ${{env.IMAGE_NAME}} Docker image
         id: push

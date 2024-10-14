@@ -42,22 +42,17 @@ jobs:
           driver-opts: |
             image=moby/buildkit:master
           platforms: ${{ matrix.platform }}
-
-      - name: Extract metadata for Docker
-        id: meta
-        uses: docker/metadata-action@v5.5.1
-        with:
-          images: ghcr.io/fit-pin/${{ env.IMAGE_NAME }}
         
       - name: Build and push ${{env.IMAGE_NAME}} Docker image
         id: push
         uses: docker/build-push-action@v6.9.0
         with:
-          push: true
           platforms: ${{ matrix.platform }}
           context: ${{ env.FILE_LOCATION }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          tags: ghcr.io/fit-pin/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=registry,ref=ghcr.io/fit-pin/${{ env.IMAGE_NAME }}:latest
+          cache-to: type=inline
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1

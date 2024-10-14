@@ -10,12 +10,8 @@ jobs:
   # fitpin-ar-backend 빌드
   publish_fitpin-ar-backend:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform:
-          - linux/amd64
-          - linux/arm64/v8
     env:
+      PLAT_FORM: linux/amd64,linux/arm64
       IMAGE_NAME: fitpin-ar-backend
       FILE_LOCATION: ./AR-BackEnd/
     permissions:
@@ -41,22 +37,15 @@ jobs:
           driver: docker-container
           driver-opts: |
             image=moby/buildkit:master
-          platforms: ${{ matrix.platform }}
+          platforms: ${{ env.PLAT_FORM }}
         
       - name: Build and push ${{env.IMAGE_NAME}} Docker image
         id: push
         uses: docker/build-push-action@v6.9.0
         with:
-          platforms: ${{ matrix.platform }}
+          platforms: ${{ env.PLAT_FORM }}
           context: ${{ env.FILE_LOCATION }}
           push: true
           tags: ghcr.io/fit-pin/${{ env.IMAGE_NAME }}:latest
           cache-from: type=registry,ref=ghcr.io/fit-pin/${{ env.IMAGE_NAME }}:latest
           cache-to: type=inline
-
-      - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-name: ghcr.io/fit-pin/${{ env.IMAGE_NAME}}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true

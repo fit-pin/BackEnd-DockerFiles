@@ -1,9 +1,24 @@
 services:
-  fitpin:
-    container_name: fitpin
-    image: fitpin
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - 8080:8080
+  fitpin-ar:
+    container_name: fitpin-ar
+    image: ghcr.io/fit-pin/fitpin-ar-backend
+    environment:
+      # 여기서 DB ppk 파일 경로 적기
+      - DB_SSH_PRIVATE="$(cat ./AWSkey.ppk)"
+    networks:
+      default:
+        ipv4_address: 172.17.0.11
+  fitpin-web:
+    container_name: fitpin-web
+    image: ghcr.io/fit-pin/fitpin-web-backend
+    networks:
+      default:
+        ipv4_address: 172.17.0.12
+
+
+networks:
+  # 네트워크 이름
+  default:
+    ipam:
+      config:
+        - subnet: 172.17.0.0/16

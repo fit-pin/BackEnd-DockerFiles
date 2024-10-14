@@ -55,7 +55,6 @@ jobs:
         with:
           platforms: ${{ matrix.platform }}
           context: ${{ env.FILE_LOCATION }}
-          tags: ${{env.IMAGE_NAME}}:latest
           cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:latest
           cache-to: type=inline
           outputs: type=image,name=${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true

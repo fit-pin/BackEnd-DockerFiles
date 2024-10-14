@@ -1,9 +1,9 @@
-name: Publish AR-BackEnd image
+name: Publish WEB-BackEnd image
 
 # 전역 변수
 env:
-  IMAGE_NAME: ghcr.io/fit-pin/fitpin-ar-backend
-  FILE_LOCATION: ./AR-BackEnd/
+  IMAGE_NAME: ghcr.io/fit-pin/fitpin-web-backend
+  FILE_LOCATION: ./WEB-BackEnd/
   TAG: latest
 
 on:
@@ -13,8 +13,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  # fitpin-ar-backend 빌드
-  build_fitpin-ar-backend:
+  # fitpin-web-backend 빌드
+  build_fitpin-web-backend:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -79,7 +79,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs:
-      - build_fitpin-ar-backend
+      - build_fitpin-web-backend
     steps:
       - name: Download digests
         uses: actions/download-artifact@v4

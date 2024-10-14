@@ -31,9 +31,12 @@ echo -e "PATH=$JAVA_HOME/bin:\$PATH" >>~/.bashrc
 RUN git clone https://github.com/fit-pin/fitpin_backend_web.git
 WORKDIR "/home/${USER_NAME}/fitpin_backend_web"
 
-#DB 터널링을 위한 SSH 키 생성
-ARG DB_SSH_PRIVATE
-RUN mkdir src/main/resources/dbssh && echo "$DB_SSH_PRIVATE" > src/main/resources/dbssh/AWSkey.ppk && \
-chmod +x gradlew
+# gradlew 실행권한 주기
+RUN chmod +x gradlew
 
-CMD [ "/bin/bash", "-c",  "git pull && ./gradlew bootRun"]
+#실행 할때 처음 실행 여부 판단하여 DB_SSH_PRIVATE 환경변수로 AWSkey.ppk 생성하고 감
+CMD git pull; \
+if ! [ -f  ./.initfile ]; then \
+    mkdir src/main/resources/dbssh && echo "$DB_SSH_PRIVATE" > src/main/resources/dbssh/AWSkey.ppk && touch ./initfile; \
+fi; \
+./gradlew bootRun

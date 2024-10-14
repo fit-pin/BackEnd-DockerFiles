@@ -1,5 +1,10 @@
 name: Publish AR-BackEnd image
 
+# 전역 변수
+env:
+  IMAGE_NAME: ghcr.io/fit-pin/fitpin-ar-backend
+  FILE_LOCATION: ./AR-BackEnd/
+
 on:
   push:
     branches:
@@ -16,9 +21,6 @@ jobs:
         platform:
           - linux/amd64
           - linux/arm64
-    env:
-      IMAGE_NAME: ghcr.io/fit-pin/fitpin-ar-backend
-      FILE_LOCATION: ./AR-BackEnd/
     permissions:
       contents: read
       packages: write

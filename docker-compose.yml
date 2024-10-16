@@ -4,7 +4,7 @@ services:
     image: ghcr.io/fit-pin/fitpin-ar-backend
     networks:
       fitpin-network:
-        ipv4_address: 172.168.0.3
+        ipv4_address: 172.168.0.2
 
   fitpin-web:
     container_name: fitpin-web
@@ -13,7 +13,7 @@ services:
       - DB_SSH_PRIVATE=${DB_SSH_PRIVATE}
     networks:
       fitpin-network:
-        ipv4_address: 172.168.0.4
+        ipv4_address: 172.168.0.3
 
 networks:
   # 네트워크 이름

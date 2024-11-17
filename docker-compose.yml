@@ -21,6 +21,7 @@ services:
     image: ghcr.io/fit-pin/fitpin-web-backend
     environment:
       - DB_SSH_PRIVATE=${DB_SSH_PRIVATE}
+      - WEB_APPLICATION_YML=${WEB_APPLICATION_YML}
     networks:
       fitpin-network:
         ipv4_address: 172.168.0.4

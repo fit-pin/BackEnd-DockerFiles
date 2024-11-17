@@ -1,4 +1,5 @@
 # BackEnd-DockerFiles
+
 앱, 웹, AR 백엔드의 Docker 컨테이너 통합 관리를 위한 리포지토리
 
 ## Docker-Compose 실행
@@ -10,14 +11,23 @@ docker compose -p fitpin up -d
 ```
 
 ## 배포 구조
-- 각각의 서비스들을 `nginx` 리버스 프록시로 묶어서 하나의 서버에서 배포해서 사용
+
+-   각각의 서비스들을 `nginx` 리버스 프록시로 묶어서 하나의 서버에서 배포해서 사용
+
+### 배포 주소
+
+-   `fitpin-ar`: https://fitpin.kro.kr/ar-api
+-   `fitpin-app`: https://fitpin.kro.kr/app-api
+-   `fitpin-web`: https://fitpin.kro.kr/web-api
 
 ### 각 서비스 포트번호
-- `fitpin-ar`: 80
-- `fitpin-app`: 8080
-- `fitpin-web`: 8080
+
+-   `fitpin-ar`: 80
+-   `fitpin-app`: 8080
+-   `fitpin-web`: 8080
 
 ## VTON-BackEnd 배포
+
 > Runner의 용량 문제로 따로 빌드하여 배포
 
 1. **Dcoker에 ghcr.io 로그인 하기**
@@ -37,3 +47,10 @@ docker compose -p fitpin up -d
     ```bash
     docker run -it --name fitpin-idm -p 80:80 --gpus all ghcr.io/fit-pin/fitpin-vton-backend
     ```
+
+### 배포 주소 & 포트
+
+> 현재는 비용문제로 사용안함
+
+-   `포트`: 80
+-   `주소`: https://fitpin.kro.kr/ar-idm-api

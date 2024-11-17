@@ -3,7 +3,7 @@ FROM da864268/my-ubuntu
 
 LABEL maintainer="da864268@naver.com"
 LABEL description="fitpin"
-LABEL org.opencontainers.image.source=https://github.com/fit-pin/fitpin_ar_backend
+LABEL org.opencontainers.image.source=https://github.com/fit-pin/fitpin_backend_ar.git
 
 # bash 로 변경
 SHELL ["/bin/bash", "-c"]
@@ -32,8 +32,8 @@ ENV PATH="/home/${USER_NAME}/miniconda3/bin:$PATH"
 RUN conda init && source ~/.bashrc
 
 #fitpin_ar_backend clone
-RUN git clone https://github.com/fit-pin/fitpin_ar_backend.git
-WORKDIR "/home/${USER_NAME}/fitpin_ar_backend"
+RUN git clone https://github.com/fit-pin/fitpin_backend_ar.git
+WORKDIR "/home/${USER_NAME}/fitpin_backend_ar"
 
 # 모델파일 다운로드
 RUN wget --content-disposition -P ./src/model \

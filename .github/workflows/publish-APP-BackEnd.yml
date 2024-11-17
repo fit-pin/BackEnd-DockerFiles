@@ -1,9 +1,9 @@
-name: Publish AR-BackEnd image
+name: Publish APP-BackEnd image
 
 # 전역 변수
 env:
-  IMAGE_NAME: ghcr.io/fit-pin/fitpin-ar-backend
-  FILE_LOCATION: ./AR-BackEnd/
+  IMAGE_NAME: ghcr.io/fit-pin/fitpin-app-backend
+  FILE_LOCATION: ./APP-BackEnd/
   TAG: latest
 
 on:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   # TODO: yml 변경시 해당 부분 변경
-  build_fitpin-ar-backend:
+  build_fitpin-app-backend:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -80,7 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       # TODO: yml 변경시 해당 부분 변경
-      - build_fitpin-ar-backend
+      - build_fitpin-app-backend
     steps:
       - name: Download digests
         uses: actions/download-artifact@v4

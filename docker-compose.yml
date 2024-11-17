@@ -6,6 +6,16 @@ services:
       fitpin-network:
         ipv4_address: 172.168.0.2
 
+  fitpin-app:
+    container_name: fitpin-app
+    image: ghcr.io/fit-pin/fitpin-app-backend
+    environment:
+      - DB_SSH_PRIVATE=${DB_SSH_PRIVATE}
+      - APP_APPLICATION_YML=${APP_APPLICATION_YML}
+    networks:
+      fitpin-network:
+        ipv4_address: 172.168.0.3
+
   fitpin-web:
     container_name: fitpin-web
     image: ghcr.io/fit-pin/fitpin-web-backend
@@ -13,7 +23,7 @@ services:
       - DB_SSH_PRIVATE=${DB_SSH_PRIVATE}
     networks:
       fitpin-network:
-        ipv4_address: 172.168.0.3
+        ipv4_address: 172.168.0.4
 
 networks:
   # 네트워크 이름

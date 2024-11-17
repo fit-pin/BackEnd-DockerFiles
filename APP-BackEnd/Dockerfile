@@ -3,7 +3,7 @@ FROM da864268/my-ubuntu
 
 LABEL maintainer="da864268@naver.com"
 LABEL description="fitpin"
-LABEL org.opencontainers.image.source=https://github.com/fit-pin/fitpin_backend_web
+LABEL org.opencontainers.image.source=https://github.com/fit-pin/fitpin_backend_app
 
 # bash 로 변경
 SHELL ["/bin/bash", "-c"]
@@ -27,18 +27,20 @@ RUN echo -e "\n\n" >> ~/.bashrc && \
 echo -e "export JAVA_HOME=\"/usr/lib/jvm/$(ls /usr/lib/jvm | grep java-17-openjdk)\"" >>~/.bashrc && \
 echo -e "PATH=$JAVA_HOME/bin:\$PATH" >>~/.bashrc
 
-# fitpin_backend_web clone
-RUN git clone https://github.com/fit-pin/fitpin_backend_web.git
-WORKDIR "/home/${USER_NAME}/fitpin_backend_web"
+# fitpin_backend_app clone
+RUN git clone https://github.com/fit-pin/fitpin_backend_app.git
+WORKDIR "/home/${USER_NAME}/fitpin_backend_app"
 
 # gradlew 실행권한 주기
 RUN chmod +x gradlew
 
-#실행 할때 처음 실행 여부 판단하여 DB_SSH_PRIVATE 환경변수로 AWSkey.ppk 생성하고 감
+#실행 할때 처음 실행 여부 판단하여 DB_SSH_PRIVATE 환경변수로 AWSkey.ppk 생성
+# APP_APPLICATION_YML 환경변수로 application.yml 생성
 CMD git pull; \
 if ! [ -f  ./.initfile ]; then \
     mkdir src/main/resources/dbssh; \
-    echo "$DB_SSH_PRIVATE" > src/main/resources/application.yml; \
+    echo "$DB_SSH_PRIVATE" > src/main/resources/dbssh/AWSkey.ppk; \
+    echo "$APP_APPLICATION_YML" > src/main/resources/dbssh/AWSkey.ppk; \
     touch ./initfile; \
 fi; \
 ./gradlew bootRun

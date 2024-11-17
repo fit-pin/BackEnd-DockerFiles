@@ -40,7 +40,7 @@ CMD git pull; \
 if ! [ -f  ./.initfile ]; then \
     mkdir src/main/resources/dbssh; \
     echo "$DB_SSH_PRIVATE" > src/main/resources/dbssh/AWSkey.ppk; \
-    echo "$APP_APPLICATION_YML" > src/main/resources/dbssh/AWSkey.ppk; \
-    touch ./initfile; \
+    echo "$APP_APPLICATION_YML" > src/main/resources/application.yml; \
+    touch ./.initfile; \
 fi; \
 ./gradlew bootRun

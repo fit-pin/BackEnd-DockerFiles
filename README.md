@@ -6,7 +6,7 @@
 ```bash
 DB_SSH_PRIVATE="$(cat <DB SSH키 파일>)" \
 APP_APPLICATION_YML="$(cat <APP application.yml 파일>)" \
-docker compose -p fitpin up
+docker compose -p fitpin up -d
 ```
 
 ## 배포 구조

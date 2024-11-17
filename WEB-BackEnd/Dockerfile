@@ -38,7 +38,7 @@ RUN chmod +x gradlew
 CMD git pull; \
 if ! [ -f  ./.initfile ]; then \
     mkdir src/main/resources/dbssh; \
-    echo "$DB_SSH_PRIVATE" > src/main/resources/application.yml; \
-    touch ./initfile; \
+    echo "$DB_SSH_PRIVATE" > src/main/resources/dbssh/AWSkey.ppk; \
+    touch ./.initfile; \
 fi; \
 ./gradlew bootRun

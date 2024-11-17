@@ -38,8 +38,8 @@ RUN chmod +x gradlew
 # APP_APPLICATION_YML 환경변수로 application.yml 생성
 CMD git pull; \
 if ! [ -f  ./.initfile ]; then \
-    mkdir src/main/resources/dbssh; \
-    echo "$DB_SSH_PRIVATE" > src/main/resources/dbssh/AWSkey.ppk; \
+    mkdir src/main/resources/dbSSL; \
+    echo "$DB_SSH_PRIVATE" > src/main/resources/dbSSL/AWSkey.ppk; \
     echo "$APP_APPLICATION_YML" > src/main/resources/application.yml; \
     touch ./.initfile; \
 fi; \

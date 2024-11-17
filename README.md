@@ -11,6 +11,14 @@ WEB_APPLICATION_YML="$(cat <WEB application.yml 파일>)" \
 docker compose -p fitpin up -d
 ```
 
+### 베포 파일 다운로드
+
+-   [DB SSH키 파일](https://trello.com/1/cards/6639b116bc4ad5a78fc3593a/attachments/6739c7987be5b7acd5abfe61/download/private.ppk)
+
+-   [APP application.yml 파일](https://trello.com/1/cards/6639b116bc4ad5a78fc3593a/attachments/6739c6a335705bce5197164f/download/app_application.yml)
+
+-   [WEB application.yml 파일](https://trello.com/1/cards/6639b116bc4ad5a78fc3593a/attachments/6739c6a4cc0324efa60839c3/download/web_application.yml)
+
 ## 배포 구조
 
 -   각각의 서비스들을 `nginx` 리버스 프록시로 묶어서 하나의 서버에서 배포해서 사용

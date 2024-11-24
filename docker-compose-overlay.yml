@@ -1,0 +1,45 @@
+services:
+  ar:
+    image: ghcr.io/fit-pin/fitpin-ar-backend
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == Raspbarry-pi5
+    networks:
+      - fitpin-network
+
+  app:
+    image: ghcr.io/fit-pin/fitpin-app-backend
+    environment:
+      - DB_SSH_PRIVATE=${DB_SSH_PRIVATE}
+      - APP_APPLICATION_YML=${APP_APPLICATION_YML}
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == ip-172-31-0-110
+    networks:
+      - fitpin-network
+
+  web:
+    image: ghcr.io/fit-pin/fitpin-web-backend
+    environment:
+      - DB_SSH_PRIVATE=${DB_SSH_PRIVATE}
+      - WEB_APPLICATION_YML=${WEB_APPLICATION_YML}
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == Raspbarry-pi5
+    networks:
+      - fitpin-network
+
+networks:
+  # 네트워크 이름
+  fitpin-network:
+    driver: overlay
+    attachable: true
+    ipam:
+      config:
+        - subnet: 172.168.0.0/16
